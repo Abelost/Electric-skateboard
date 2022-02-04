@@ -3,7 +3,7 @@
   2022-01-23
 
   mod. latest: 220204
-  Nrf_nano built in CE pin 10, CSN pin 9
+  Nrf_nano built in CE pin 9, CSN pin 10
 
 */
 #include <SPI.h>
@@ -11,8 +11,8 @@
 #include <RF24.h>
 #include <Wire.h>
 #include <printf.h>
-#define CE_PIN 10
-#define CSN_PIN 9
+#define CE_PIN 9
+#define CSN_PIN 10
 
 const int yPin = A0;
 int ySpeed = 90; //Kommer bli 1500 vid ESC

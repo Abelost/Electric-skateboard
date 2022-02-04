@@ -59,9 +59,7 @@ void loop() {
     battery = 100;
   }
   battery -= 1;
-  //Serial.println(battery);
-  //const char text[] = "Lova!";
-  //radio.write(&x, sizeof(x));
+  Serial.println(battery);
   radio.write(&battery, sizeof(battery));
 
   delay(5);
@@ -72,8 +70,8 @@ void loop() {
     radio.read(&servoSpeed, sizeof(servoSpeed));
     
     Serial.println(servoSpeed);
-    //esc.writeMicroseconds(servoSpeed);
-    //esc.write(servoSpeed);
+    esc.writeMicroseconds(servoSpeed);
+    esc.write(servoSpeed);
   }
 
   

@@ -54,25 +54,25 @@ void loop() {
   delay(5);
 
   radio.stopListening();
-//  int yPos = analogRead(yPin);
-//  ySpeed = map(yPos, 0, 1023, 0, 180); // kommer bli 0, 1023, 1000, 2000 vid ESC
-//
-//  if (ySpeed > 88){
-//
-//    if (ySpeed > ySpeedOutput) {
-//      ySpeedOutput += acceleration;
-//      delay(delayTime); 
-//    }
-//    if (ySpeed < ySpeedOutput){
-//      ySpeedOutput -= decceleration;
-//      delay(delayTime);
-//    }
-//    ySpeedOutput = constrain(ySpeedOutput, 90, maxSpeed);
-//  }
-//
-//  if (ySpeed < 87){
-//    ySpeedOutput = ySpeed;
-//  }  
+  int yPos = analogRead(yPin);
+  ySpeed = map(yPos, 0, 1023, 0, 180); // kommer bli 0, 1023, 1000, 2000 vid ESC
+
+  if (ySpeed > 88){
+
+    if (ySpeed > ySpeedOutput) {
+      ySpeedOutput += acceleration;
+      delay(delayTime); 
+    }
+    if (ySpeed < ySpeedOutput){
+      ySpeedOutput -= decceleration;
+      delay(delayTime);
+    }
+    ySpeedOutput = constrain(ySpeedOutput, 90, maxSpeed);
+  }
+
+  if (ySpeed < 87){
+    ySpeedOutput = ySpeed;
+  }  
 
 //  Serial.print("Y-Position:   ");
 //  Serial.print(yPos);

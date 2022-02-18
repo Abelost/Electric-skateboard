@@ -3,10 +3,10 @@
   2022-01-15
 
   mod. latest: 220218
+  Arduino UNO with a nrf_module
   Will probably change UNO to nano at a later stage.
 
 */
-
 #include <SPI.h>
 #include <nRF24L01.h>
 #include <RF24.h>
@@ -24,6 +24,7 @@ RF24 radio(CE_PIN, CSN_PIN);
 const uint64_t readingAddress = 0x9090909001;
 const uint64_t writingAddress = 0x9090909002;
 
+
 void setup() {
   Serial.begin(9600);
   printf_begin();
@@ -37,13 +38,11 @@ void setup() {
   //radio.printDetails();                   //Print for debugging
 }
 
+
 void loop() {
   delay(5);
-  
   sendBatteryLevel();
-
   receiveEscSpeed();
-   
 }
 
 
@@ -64,9 +63,8 @@ void receiveEscSpeed(){
   if ( radio.available()) {
     int servoSpeed = "";
     radio.read(&servoSpeed, sizeof(servoSpeed));
-    
     Serial.println(servoSpeed);
-    esc.writeMicroseconds(servoSpeed);
-    esc.write(servoSpeed);
+    //esc.writeMicroseconds(servoSpeed);  //used for ESC on skateboard
+    esc.write(servoSpeed);                //used for prototyping with servo
   }
 }

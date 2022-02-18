@@ -28,6 +28,7 @@ RF24 radio(CE_PIN, CSN_PIN);
 const uint64_t writingAddress = 0x9090909001;
 const uint64_t readingAddress = 0x9090909002;
 
+
 void setup() {
   Serial.begin(9600);
   radio.begin();
@@ -41,13 +42,11 @@ void setup() {
   //radio.printDetails();                   //Print for debugging
 }
 
+
 void loop() {
   delay(5);
-
   sendEscSpeed();
-  
   batteryLevelBoard = receiveBatteryLevelBoard(); 
-  
 }
 
 
@@ -68,7 +67,6 @@ void sendEscSpeed(){
   radio.stopListening();
   int yPos = analogRead(yPin);
   ySpeed = map(yPos, 0, 1023, 0, 180); // kommer bli 0, 1023, 1000, 2000 vid ESC
-
   if (ySpeed > 88){
     if (ySpeed > ySpeedOutput) {
       ySpeedOutput += acceleration;
@@ -80,20 +78,10 @@ void sendEscSpeed(){
     }
     ySpeedOutput = constrain(ySpeedOutput, 90, maxSpeed);
   }
-
   if (ySpeed < 87){
     ySpeedOutput = ySpeed;
   }  
-
-//  Serial.print("Y-Position:   ");
-//  Serial.print(yPos);
-//  Serial.print("\t \t");
-//  Serial.print("Y-Speed: ");
-//  Serial.println(ySpeed);
-//  Serial.print("\t \t");
   Serial.print("Y-SpeedOutput: ");
   Serial.println(ySpeedOutput);
-  Serial.print("\t \t");
-
   radio.write(&ySpeedOutput, sizeof(ySpeedOutput));
 }

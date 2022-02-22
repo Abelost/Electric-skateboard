@@ -1,0 +1,5 @@
+The libraries used in this project where downloaded through the Arduino IDE.
+
+1. RF24
+2. U8g2
+3. Servo (used for prototyping, replace ESC with a servo)

@@ -12,9 +12,11 @@
 #include <RF24.h>
 #include <Wire.h>
 #include <printf.h>
-#include <Arduino.h>
-#include <U8g2lib.h>
-#include <U8x8lib.h>
+//#include <Arduino.h>
+//#include <U8g2lib.h>
+//#include <U8x8lib.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SH110X.h>
 #define CE_PIN 9
 #define CSN_PIN 10
 
@@ -27,7 +29,13 @@ int decceleration = 1;
 int delayTime = 7;
 int maxSpeed = 179; //Får se va maxspeed blir
 
-U8X8_SH1106_128X64_NONAME_HW_I2C u8x8(/* reset=*/ U8X8_PIN_NONE);
+//U8X8_SH1106_128X64_NONAME_HW_I2C u8x8(/* reset=*/ U8X8_PIN_NONE);
+#define i2c_Address 0x3c
+
+#define SCREEN_WIDTH 128 
+#define SCREEN_HEIGHT 64
+#define OLED_RESET -1
+Adafruit_SH1106G display = Adafruit_SH1106G(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 RF24 radio(CE_PIN, CSN_PIN);
 
 const uint64_t writingAddress = 0x9090909001;
@@ -37,8 +45,10 @@ const uint64_t readingAddress = 0x9090909002;
 void setup() {
   Serial.begin(9600);
   radio.begin();
-  u8x8.begin();
-  u8x8.setFont(u8x8_font_chroma48medium8_r);
+  display.begin(i2c_Address, true);
+  display.display();
+  //u8x8.begin();
+  //u8x8.setFont(u8x8_font_chroma48medium8_r);
   printf_begin();
   pinMode (yPin, INPUT);
   
@@ -55,14 +65,6 @@ void loop() {
   delay(5);
   sendEscSpeed();
   //batteryLevelBoard = receiveBatteryLevelBoard(); 
-  u8x8.clearLine(0);
-  u8x8.drawString(0,0,"Speed: ");
-  u8x8.setCursor(7, 0);
-  u8x8.print(ySpeedOutput);
-//  u8x8.draw(2, 2, ySpeedOutput);
-//  Serial.print(ySpeedOutput);
-//  delay(5);
-  //u8x8.clearDisplay();
 }
 
 

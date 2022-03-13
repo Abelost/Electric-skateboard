@@ -1,11 +1,9 @@
 /*
   (c) Linus Johansson 
   2022-01-23
-
   mod. latest: 220302
   Nrf_nano built in CE pin 9, CSN pin 10
   Oled 1.3" IIC 0x78, 0x7A SH1106
-
 */
 #include <SPI.h>
 #include <nRF24L01.h>
@@ -43,6 +41,8 @@ void setup() {
   radio.begin();
   display.begin(i2c_Address, true);
   display.display();
+  display.clearDisplay();
+
   printf_begin();
   pinMode (yPin, INPUT);
   
@@ -59,6 +59,28 @@ void loop() {
   delay(5);
   sendEscSpeed();
   //batteryLevelBoard = receiveBatteryLevelBoard(); 
+
+  //display.clearDisplay();
+  // display.setTextSize(2);
+  // display.setTextColor(SH110X_WHITE);
+  // display.setCursor(10, 30);
+  // display.print("Speed:");
+  // display.print(ySpeedOutput);
+  // display.drawRoundRect(0, 15, 60, 40, 8, SH110X_WHITE);
+  // display.fillRoundRect(0, 15, 10, 40, 8, SH110X_WHITE);
+  int r = rand() / 220;
+  display.setTextSize(2);
+  display.setTextColor(SH110X_WHITE, SH110X_BLACK);
+  display.setCursor(0, 33);
+  display.println(r);
+  display.fillRect(r, 50, 128 - r, 10, SH110X_BLACK);
+  display.fillRect(3, 50, r, 10, SH110X_WHITE);
+
+  for (int i = 1; i < 13; i++) {
+    display.fillRect(i * 10, 50, 2, 10, SH110X_BLACK);
+  }
+
+  display.display(); 
 }
 
 
